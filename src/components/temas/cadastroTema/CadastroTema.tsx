@@ -29,9 +29,9 @@ function CadastroTema() {
   }, [id]);
 
   async function findById(id: string) {
-    buscaId(`/temas/${id}`, setTema, {
+    await buscaId(`/temas/${id}`, setTema, {
       headers: {
-        Authorization: token,
+        'Authorization': token,
       },
     });
   }
@@ -45,24 +45,35 @@ function CadastroTema() {
 
   async function onSubmit(e: ChangeEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log("tema " + JSON.stringify(tema));
 
     if (id !== undefined) {
-      console.log(tema);
-      put(`/temas`, tema, setTema, {
-        headers: {
-          Authorization: token,
-        },
-      });
-      alert("Tema atualizado com sucesso");
+      try {
+        await put(`/temas`, tema, setTema, {
+          headers: {
+            'Authorization': token,
+          },
+        });
+
+        alert("Tema atualizado com sucesso!");
+      } catch (error) {
+        console.log(`Error: ${error}`);
+        alert("Erro, por favor verifique a quantidade minima de caracteres");
+      }
     } else {
-      post(`/temas`, tema, setTema, {
-        headers: {
-          Authorization: token,
-        },
-      });
-      alert("Tema cadastrado com sucesso");
+      try {
+        await post(`/temas`, tema, setTema, {
+          headers: {
+            'Authorization': token,
+          },
+        });
+
+        alert("Tema cadastrado com sucesso");
+      } catch (error) {
+        console.log(`Error: ${error}`);
+        alert("Erro, por favor verifique a quantidade minima de caracteres");
+      }
     }
+
     back();
   }
 
@@ -79,7 +90,7 @@ function CadastroTema() {
           component="h1"
           align="center"
         >
-          Formulário de cadastro tema
+          Cadastro de Tema
         </Typography>
         <TextField
           value={tema.descricao}

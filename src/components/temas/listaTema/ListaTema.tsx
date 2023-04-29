@@ -29,7 +29,7 @@ function ListaTema() {
   async function getTema() {
     await busca("/temas", setTemas, {
       headers: {
-        Authorization: token,
+        'Authorization': token,
       },
     });
   }
@@ -64,7 +64,7 @@ function ListaTema() {
                       size="small"
                       color="primary"
                     >
-                      atualizar
+                      Atualizar
                     </Button>
                   </Box>
                 </Link>
@@ -74,7 +74,7 @@ function ListaTema() {
                 >
                   <Box mx={1}>
                     <Button variant="contained" size="small" color="secondary">
-                      deletar
+                      Deletar
                     </Button>
                   </Box>
                 </Link>

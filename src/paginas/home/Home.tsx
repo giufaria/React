@@ -3,13 +3,16 @@ import { Typography, Grid, Button } from "@material-ui/core";
 import { Box } from "@mui/material";
 import TabPostagem from "../../components/postagens/tabPostagem/TabPostagem";
 import ModalPostagem from "../../components/postagens/modalPostagem/ModalPostagem";
-import "./Home.css";
 import { useNavigate } from "react-router";
-import useLocalStorage from "react-use-localstorage";
+import { TokenState } from "../../store/tokens/TokensReducer";
+import { useSelector } from "react-redux";
+import "./Home.css";
 
 function Home() {
   let navigate = useNavigate();
-  const [token, setToken] = useLocalStorage("token");
+  const token = useSelector<TokenState, TokenState["tokens"]>(
+    (state) => state.tokens
+  );
 
   useEffect(() => {
     if (token == "") {
@@ -46,7 +49,7 @@ function Home() {
             align="center"
             className="titulo"
           >
-            expresse aqui os seus pensamentos e opiniões!
+            Expresse aqui os seus pensamentos e opiniões!
           </Typography>
         </Box>
         <Box display="flex" justifyContent="center">

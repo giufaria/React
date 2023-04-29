@@ -1,8 +1,10 @@
 import React, { useState, useEffect, ChangeEvent } from "react";
-import { Grid, Box, Typography, TextField, Button } from "@material-ui/core";
+import { useNavigate } from "react-router-dom";
 import User from "../../models/User";
 import { cadastroUsuario } from "../../services/Service";
-import { Link, useNavigate } from "react-router-dom";
+import { Grid, Typography, Button, TextField } from "@material-ui/core";
+import { Box } from "@mui/material";
+import { Link } from "react-router-dom";
 import "./CadastroUsuario.css";
 
 function CadastroUsuario() {
@@ -42,20 +44,26 @@ function CadastroUsuario() {
   }
   async function onSubmit(e: ChangeEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (confirmarSenha == user.senha) {
-      cadastroUsuario(`/usuarios/cadastrar`, user, setUserResult);
-      alert("Usuario cadastrado com sucesso");
+    if (confirmarSenha === user.senha && user.senha.length >= 8) {
+      try {
+        await cadastroUsuario(`/usuarios/cadastrar`, user, setUserResult);
+        alert("Usuario cadastrado com sucesso!");
+      } catch (error) {
+        console.log(`Error: ${error}`);
+        alert("Erro ao cadastrar o Usuário!");
+      }
     } else {
-      alert(
-        "Dados inconsistentes. Favor verificar as informações de cadastro."
-      );
+      alert("Dados inconsistentes. Verifique as informações de cadastro.");
+      setUser({ ...user, senha: "" });
+      setConfirmarSenha("");
     }
   }
+
   return (
     <Grid container direction="row" justifyContent="center" alignItems="center">
       <Grid item xs={6} className="imagem2"></Grid>
       <Grid item xs={6} alignItems="center">
-        <Box padding={10}>
+        <Box paddingX={10}>
           <form onSubmit={onSubmit}>
             <Typography
               variant="h3"
@@ -121,6 +129,7 @@ function CadastroUsuario() {
               margin="normal"
               fullWidth
             />
+
             <Box marginTop={2} textAlign="center">
               <Link to="/login" className="text-decorator-none">
                 <Button

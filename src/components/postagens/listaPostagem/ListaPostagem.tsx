@@ -2,22 +2,20 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Postagem from "../../../models/Postagem";
 import { busca } from "../../../services/Service";
-import {
-  Card,
-  CardActions,
-  CardContent,
-  Button,
-  Typography,
-} from "@material-ui/core";
+import { Card, CardActions, CardContent, Button, Typography } from "@material-ui/core";
 import { Box } from "@mui/material";
 import "./ListaPostagem.css";
 import useLocalStorage from "react-use-localstorage";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { TokenState } from "../../../store/tokens/TokensReducer";
 
 function ListaPostagem() {
   const [postagens, setPostagens] = useState<Postagem[]>([]);
-  const [token, setToken] = useLocalStorage("token");
   let navigate = useNavigate();
+  const token = useSelector<TokenState, TokenState["tokens"]>(
+    (state) => state.tokens
+  );
 
   useEffect(() => {
     if (token == "") {
@@ -29,7 +27,7 @@ function ListaPostagem() {
   async function getPost() {
     await busca("/postagens", setPostagens, {
       headers: {
-        Authorization: token,
+        'Authorization': token,
       },
     });
   }
