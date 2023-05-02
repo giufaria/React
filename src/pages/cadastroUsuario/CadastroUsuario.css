@@ -1,0 +1,16 @@
+.imagem2{
+    background-image: url(https://i.pinimg.com/564x/0b/71/d6/0b71d6bfe89e0df683c239c363955891.jpg);
+    background-repeat: no-repeat;
+    width: 100vh;
+    min-height: 100vh;
+    background-size: cover;
+    background-position: center;
+}
+
+.textos2{
+    font-weight: bold!important;
+}
+
+.btnCancelar{
+    margin-right: 20px!important;
+}
